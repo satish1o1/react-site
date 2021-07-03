@@ -1,3 +1,4 @@
+  
 import '../collection-item/collectionitem.styles.scss'
 const CollectionItem = ({name,imageUrl,price}) =>
 (
