@@ -1,39 +1,36 @@
 import './App.css'
 import React from 'react'
-import HomePage from './components/page/homepage/homepage.component'
-import ShopPage from './components/page/shoppage/shoppage.component'
+import HomePage from './page/homepage/homepage.component'
+import ShopPage from './page/shoppage/shoppage.component'
+import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import Header from './components/component/header/header.component'
-import SigninAndSignup from './components/page/signin-and-signup/signin-and-signup'
+import SigninAndSignup from './page/signin-and-signup/signin-and-signup'
 import { auth } from './firebase/firebase.utils'
 import { createUserProfileDocument } from './firebase/firebase.utils'
+import { setCurrentUser } from './redux/user/userAction'
+
+
 
 class App extends React.Component {
-   constructor() {
-      super()
-      this.state = {
-         CurrentUser: null
-      }
-   }
-      unSubscribeFromAuth = null
-   componentDidMount() {
+   unSubscribeFromAuth = null
+   componentDidMount() { 
+      const { setCurrentUser } = this.props
       this.unSubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
          if (userAuth) {
-               const userRef = await createUserProfileDocument(userAuth)
-               userRef.onSnapshot(snapShot => {
-                  this.setState({
-                     CurrentUser: {
-                        id: snapShot.id,
-                        ...snapShot.data()
-                     }
-                  })
+            const userRef = await createUserProfileDocument(userAuth)
+            userRef.onSnapshot(snapShot => {
+               setCurrentUser({
+                  id: snapShot.id,
+                  ...snapShot.data(),
                })
+            })
          }
          else {
-            this.setState({CurrentUser:userAuth})
-         }    
-         })  
-      }
+            setCurrentUser(userAuth)
+         }
+ })  
+}
    
    componentWillUnmount() {
       this.unSubscribeFromAuth()
@@ -42,7 +39,7 @@ class App extends React.Component {
    render() {
       return (
          <div>
-            <Header CurrentUser={this.state.CurrentUser}/>
+            <Header />
             <Switch>
                <Route exact path='/' component={HomePage} />
                <Route exact path='/shop' component={ShopPage} />
@@ -53,5 +50,10 @@ class App extends React.Component {
   }
   
 }
+const mapDispatchToProps = dispatch => ({
+      setCurrentUser: user =>dispatch(setCurrentUser(user))
+   });
 
-export default App;
+export default connect(
+   null,
+   mapDispatchToProps)(App);
