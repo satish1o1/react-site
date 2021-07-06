@@ -11,6 +11,8 @@
    text-transform: uppercase;
    font-family: 'Open Sans Condensed';
    font-weight: bolder;
+   display: flex;
+   justify-content: center;
    border: none;
    cursor: pointer;
  
@@ -25,6 +27,11 @@
    }
    &.google:hover{
       background-color:#357ae8;
+   }
+   &.inverted{
+      background-color: black;
+     color: white;
+     border: none;
    }
  }
  

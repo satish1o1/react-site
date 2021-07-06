@@ -1,8 +1,8 @@
 import './custom-button.styles.scss'
 
-const CustomButton = ({children,isGoogle,...otherProps}) => 
+const CustomButton = ({children,isGoogle,isinverted,...otherProps}) => 
  (
-   <button className={`${isGoogle ? 'google':''} custom-button`}     { ...otherProps } >
+   <button className={`${isinverted ? 'inverted':''} ${isGoogle ? 'google':''} custom-button`}     { ...otherProps } >
          {children}
       </button>
 
