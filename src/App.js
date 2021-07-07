@@ -2,6 +2,7 @@ import './App.css'
 import React from 'react'
 import HomePage from './page/homepage/homepage.component'
 import ShopPage from './page/shoppage/shoppage.component'
+import Checkout from './page/checkout/checkout.component'
 import { connect } from 'react-redux'
 import { Route, Switch,Redirect } from 'react-router-dom'
 import Header from './components/component/header/header.component'
@@ -44,6 +45,7 @@ class App extends React.Component {
                <Route exact path='/' component={HomePage} />
                <Route exact path='/shop' component={ShopPage} />
                <Route exact path="/sign" render={() => this.props.currentUser?<Redirect to ='/'/>:<SigninAndSignup/>}/>
+               <Route exact path='/checkout' component={Checkout} />
             </Switch>
          </div>
       )

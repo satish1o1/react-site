@@ -8,5 +8,20 @@ export const addItem = item => ( {
       payload:item
 })
 
+export const clearCartItem = item => (
+   {
+      type: CartType.CLEAR_ITEM_FROM_CART,
+      payload:item
+   }
+)
+
+export const removeItem = item => (
+   {
+      type: CartType.REMOVE_ITEM,
+      payload:item
+   }
+)
+
+
 
 export default toggleCartHidden
